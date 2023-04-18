@@ -21,9 +21,17 @@ def separar_palavras(tokens):
     return lista_palavras
 
 
+def normalizacao(lista_palavras):
+    lista_normalizada = list()
+    for palavra in lista_palavras:
+        lista_normalizada.append(palavra.lower())
+    return lista_normalizada
+
+
 if __name__ == '__main__':
     artigos = ler_arquivo_base_dados()
 
     palavras_separadas = separar_tokens(artigos)
     lista_palavras = separar_palavras(palavras_separadas)
-    print(len(lista_palavras))
+    lista_normalizada = normalizacao(lista_palavras)
+    print(lista_normalizada[:5])
