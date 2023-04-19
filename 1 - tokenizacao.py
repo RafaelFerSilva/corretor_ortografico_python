@@ -34,4 +34,4 @@ if __name__ == '__main__':
     palavras_separadas = separar_tokens(artigos)
     lista_palavras = separar_palavras(palavras_separadas)
     lista_normalizada = normalizacao(lista_palavras)
-    print(lista_normalizada[:5])
+    print(len(set(lista_normalizada)))
