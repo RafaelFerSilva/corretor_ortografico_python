@@ -37,16 +37,21 @@ def fatiar_palavra(palavra):
     return fatias
 
 
-def inseri_letras(fatias):
+def insere_letras(fatias):
+    novas_palavras = []
+    letras = 'abcdefghijklmnopqrstuvwxyzàáâãèéêìíîòóôõùúûç'
+    for E, D in fatias:
+        for letra in letras:
+            novas_palavras.append(E + letra + D)
 
     return novas_palavras
 
 
 def gerador_palavras(palavra):
     fatias = fatiar_palavra(palavra)
-    print(fatias)
-    # palavras_geradas = inseri_letras(fatias)
-    # return palavras_geradas
+    palavras_geradas = insere_letras(fatias)
+
+    return palavras_geradas
 
 
 if __name__ == '__main__':
@@ -55,4 +60,5 @@ if __name__ == '__main__':
     # palavras_separadas = separar_tokens(artigos)
     # lista_palavras = separar_palavras(palavras_separadas)
     # lista_normalizada = normalizacao(lista_palavras)
-    gerador_palavras("lgica")
+    palavras_geradas = gerador_palavras("lgica")
+    print(palavras_geradas)
