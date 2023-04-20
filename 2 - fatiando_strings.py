@@ -8,8 +8,13 @@ def ler_arquivo_base_dados():
     return artigos
 
 
-def separar_tokens(palavras):
-    return nltk.tokenize.word_tokenize(palavras)
+def fatiar_palavra(palavra):
+    fatias = []
+
+    for i in range(len(palavra) + 1):
+        fatias.append((palavra[:i], palavra[i:]))
+
+    return fatias
 
 
 def separar_palavras(tokens):
@@ -21,20 +26,15 @@ def separar_palavras(tokens):
     return lista_palavras
 
 
+def separar_tokens(palavras):
+    return nltk.tokenize.word_tokenize(palavras)
+
+
 def normalizacao(lista_palavras):
     lista_normalizada = list()
     for palavra in lista_palavras:
         lista_normalizada.append(palavra.lower())
     return lista_normalizada
-
-
-def fatiar_palavra(palavra):
-    fatias = []
-
-    for i in range(len(palavra) + 1):
-        fatias.append((palavra[:i], palavra[i:]))
-
-    return fatias
 
 
 def insere_letras(fatias):
@@ -54,11 +54,30 @@ def gerador_palavras(palavra):
     return palavras_geradas
 
 
+class Corretor:
+
+    def __init__(self):
+        self.artigos = ler_arquivo_base_dados()
+        self.palavras_separadas = separar_tokens(self.artigos)
+        self.lista_palavras = separar_palavras(self.palavras_separadas)
+        self.lista_normalizada = normalizacao(self.lista_palavras)
+        self.total_palavras = len(self.lista_normalizada)
+        self.frequencia = nltk.FreqDist(self.lista_normalizada)
+
+    def probabilist(self, palavra_gerada):
+
+        return self.frequencia[palavra_gerada] / self.total_palavras
+
+    def corrector(self, palavra):
+        palavras_geradas = gerador_palavras(palavra)
+        palavra_correta = max(palavras_geradas, key=self.probabilist)
+
+        return palavra_correta
+
+
 if __name__ == '__main__':
-    # artigos = ler_arquivo_base_dados()
-    #
-    # palavras_separadas = separar_tokens(artigos)
-    # lista_palavras = separar_palavras(palavras_separadas)
-    # lista_normalizada = normalizacao(lista_palavras)
-    palavras_geradas = gerador_palavras("lgica")
-    print(palavras_geradas)
+    new_corretor = Corretor()
+    palavra_errada = "lgica"
+    palavras_geradas = gerador_palavras(palavra_errada)
+    palavra_correta = new_corretor.corrector(palavra_errada)
+    print(palavra_correta)
