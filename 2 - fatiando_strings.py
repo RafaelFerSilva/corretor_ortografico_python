@@ -65,7 +65,6 @@ class Corretor:
         self.frequencia = nltk.FreqDist(self.lista_normalizada)
 
     def probabilist(self, palavra_gerada):
-
         return self.frequencia[palavra_gerada] / self.total_palavras
 
     def corrector(self, palavra):
@@ -74,10 +73,25 @@ class Corretor:
 
         return palavra_correta
 
+    def cria_dados_teste(self, nome_arquivo):
+        lista_palavras_teste = []
+        f = open(nome_arquivo, "r", encoding="utf8")
+        for linha in f:
+            correta, errada = linha.split()
+            lista_palavras_teste.append((correta, errada))
+
+        f.close()
+        return lista_palavras_teste
+
+    def avaliador(self, testes):
+
+        print('Taxa de acerto')
+
 
 if __name__ == '__main__':
     new_corretor = Corretor()
     palavra_errada = "lgica"
     palavras_geradas = gerador_palavras(palavra_errada)
     palavra_correta = new_corretor.corrector(palavra_errada)
-    print(palavra_correta)
+    lista_teste = new_corretor.cria_dados_teste("./base_dados/palavras.txt")
+    print(lista_teste)
