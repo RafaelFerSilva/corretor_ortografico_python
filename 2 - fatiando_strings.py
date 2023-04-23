@@ -84,8 +84,14 @@ class Corretor:
         return lista_palavras_teste
 
     def avaliador(self, testes):
-
-        print('Taxa de acerto')
+        numero_palavras = len(testes)
+        acertou = 0
+        for correta, errada in testes:
+            palavra_corrigida = self.corrector(errada)
+            if palavra_corrigida == correta:
+                acertou += 1
+        taxa_acerto = round(acertou*100/numero_palavras, 2)
+        print(f'Taxa de acerto: {taxa_acerto}% de {numero_palavras} palavras')
 
 
 if __name__ == '__main__':
@@ -94,4 +100,4 @@ if __name__ == '__main__':
     palavras_geradas = gerador_palavras(palavra_errada)
     palavra_correta = new_corretor.corrector(palavra_errada)
     lista_teste = new_corretor.cria_dados_teste("./base_dados/palavras.txt")
-    print(lista_teste)
+    new_corretor.avaliador(lista_teste)
