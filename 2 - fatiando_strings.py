@@ -47,9 +47,18 @@ def insere_letras(fatias):
     return novas_palavras
 
 
+def deletando_caracter(fatias):
+    novas_palavras = []
+    for E, D in fatias:
+        novas_palavras.append(E + D[1:])
+
+    return novas_palavras
+
+
 def gerador_palavras(palavra):
     fatias = fatiar_palavra(palavra)
     palavras_geradas = insere_letras(fatias)
+    palavras_geradas += deletando_caracter(fatias)
 
     return palavras_geradas
 
@@ -90,14 +99,17 @@ class Corretor:
             palavra_corrigida = self.corrector(errada)
             if palavra_corrigida == correta:
                 acertou += 1
-        taxa_acerto = round(acertou*100/numero_palavras, 2)
+        taxa_acerto = round(acertou * 100 / numero_palavras, 2)
         print(f'Taxa de acerto: {taxa_acerto}% de {numero_palavras} palavras')
 
 
 if __name__ == '__main__':
     new_corretor = Corretor()
-    palavra_errada = "lgica"
+
+    palavra_errada = "lóigica"
     palavras_geradas = gerador_palavras(palavra_errada)
-    palavra_correta = new_corretor.corrector(palavra_errada)
+
+
+    # palavra_correta = new_corretor.corrector(palavra_errada)
     lista_teste = new_corretor.cria_dados_teste("./base_dados/palavras.txt")
     new_corretor.avaliador(lista_teste)
