@@ -65,11 +65,21 @@ def troca_letras(fatias):
     return novas_palavras
 
 
+def inverte_letra(fatias):
+    novas_palavras = []
+    for E, D in fatias:
+        if len(D) > 1:
+            novas_palavras.append(E + D[1] + D[0] + D[2:])
+
+    return novas_palavras
+
+
 def gerador_palavras(palavra):
     fatias = fatiar_palavra(palavra)
     palavras_geradas = insere_letras(fatias)
     palavras_geradas += deletando_caracter(fatias)
     palavras_geradas += troca_letras(fatias)
+    palavras_geradas += inverte_letra(fatias)
 
     return palavras_geradas
 
@@ -118,7 +128,7 @@ if __name__ == '__main__':
     new_corretor = Corretor()
     lista_teste = new_corretor.cria_dados_teste("./base_dados/palavras.txt")
 
-    palavra_errada = "lígica"
+    palavra_errada = "lógiac"
     palavras_geradas = gerador_palavras(palavra_errada)
     print(palavras_geradas)
 
