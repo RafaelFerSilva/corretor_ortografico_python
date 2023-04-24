@@ -55,10 +55,21 @@ def deletando_caracter(fatias):
     return novas_palavras
 
 
+def troca_letras(fatias):
+    novas_palavras = []
+    letras = 'abcdefghijklmnopqrstuvwxyzàáâãèéêìíîòóôõùúûç'
+    for E, D in fatias:
+        for letra in letras:
+            novas_palavras.append(E + letra + D[1:])
+
+    return novas_palavras
+
+
 def gerador_palavras(palavra):
     fatias = fatiar_palavra(palavra)
     palavras_geradas = insere_letras(fatias)
     palavras_geradas += deletando_caracter(fatias)
+    palavras_geradas += troca_letras(fatias)
 
     return palavras_geradas
 
@@ -105,11 +116,12 @@ class Corretor:
 
 if __name__ == '__main__':
     new_corretor = Corretor()
+    lista_teste = new_corretor.cria_dados_teste("./base_dados/palavras.txt")
 
-    palavra_errada = "lóigica"
+    palavra_errada = "lígica"
     palavras_geradas = gerador_palavras(palavra_errada)
+    print(palavras_geradas)
 
+    new_corretor.avaliador(lista_teste)
 
     # palavra_correta = new_corretor.corrector(palavra_errada)
-    lista_teste = new_corretor.cria_dados_teste("./base_dados/palavras.txt")
-    new_corretor.avaliador(lista_teste)
