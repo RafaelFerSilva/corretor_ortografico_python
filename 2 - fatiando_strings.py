@@ -113,15 +113,19 @@ class Corretor:
         f.close()
         return lista_palavras_teste
 
-    def avaliador(self, testes):
+    def avaliador(self, testes, vocabulario):
         numero_palavras = len(testes)
         acertou = 0
+        desconhecida = 0
         for correta, errada in testes:
             palavra_corrigida = self.corrector(errada)
             if palavra_corrigida == correta:
                 acertou += 1
+            else:
+                desconhecida = (correta not in vocabulario)
         taxa_acerto = round(acertou * 100 / numero_palavras, 2)
-        print(f'Taxa de acerto: {taxa_acerto}% de {numero_palavras} palavras')
+        taxa_desconhecida = round(desconhecida * 100 / numero_palavras, 2)
+        print(f'Taxa de acerto: {taxa_acerto}% de {numero_palavras} palavras, desconhecida é {taxa_desconhecida}%')
 
 
 if __name__ == '__main__':
@@ -132,6 +136,7 @@ if __name__ == '__main__':
     palavras_geradas = gerador_palavras(palavra_errada)
     print(palavras_geradas)
 
-    new_corretor.avaliador(lista_teste)
+    vocabulario = set(new_corretor.lista_normalizada)
+    new_corretor.avaliador(lista_teste, vocabulario)
 
     # palavra_correta = new_corretor.corrector(palavra_errada)
