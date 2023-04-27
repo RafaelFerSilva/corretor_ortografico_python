@@ -138,10 +138,22 @@ class Corretor:
         desconhecida = 0
         for correta, errada in testes:
             palavra_corrigida = self.corrector(errada)
+            desconhecida = (correta not in vocabulario)
             if palavra_corrigida == correta:
                 acertou += 1
-            else:
-                desconhecida = (correta not in vocabulario)
+        taxa_acerto = round(acertou * 100 / numero_palavras, 2)
+        taxa_desconhecida = round(desconhecida * 100 / numero_palavras, 2)
+        print(f'Taxa de acerto: {taxa_acerto}% de {numero_palavras} palavras, desconhecida é {taxa_desconhecida}%')
+
+    def novo_avaliador(self, testes, vocabulario):
+        numero_palavras = len(testes)
+        acertou = 0
+        desconhecida = 0
+        for correta, errada in testes:
+            palavra_corrigida = self.novo_corrector(errada, vocabulario)
+            desconhecida = (correta not in vocabulario)
+            if palavra_corrigida == correta:
+                acertou += 1
         taxa_acerto = round(acertou * 100 / numero_palavras, 2)
         taxa_desconhecida = round(desconhecida * 100 / numero_palavras, 2)
         print(f'Taxa de acerto: {taxa_acerto}% de {numero_palavras} palavras, desconhecida é {taxa_desconhecida}%')
@@ -150,13 +162,6 @@ class Corretor:
 if __name__ == '__main__':
     new_corretor = Corretor()
     lista_teste = new_corretor.cria_dados_teste("./base_dados/palavras.txt")
-
-    palavra_errada = "lógiac"
-    palavras_geradas = gerador_palavras(palavra_errada)
-    palavras_g = gerador_turbinado(gerador_palavras(palavra_errada))
-
     vocabulario = set(new_corretor.lista_normalizada)
-    new_corretor.novo_corrector(palavra_errada, vocabulario)
     new_corretor.avaliador(lista_teste, vocabulario)
-
-    # palavra_correta = new_corretor.corrector(palavra_errada)
+    new_corretor.novo_avaliador(lista_teste, vocabulario)
