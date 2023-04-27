@@ -110,6 +110,18 @@ class Corretor:
 
         return palavra_correta
 
+    def novo_corrector(self, palavra, vocabulario):
+        palavras_geradas = gerador_palavras(palavra)
+        palavras_turbinado = gerador_turbinado(palavras_geradas)
+        todas_palavras = set(palavras_geradas + palavras_turbinado)
+        candidatos = [palavra]
+        for palavra in todas_palavras:
+            if palavra in vocabulario:
+                candidatos.append(palavra)
+
+        palavra_correta = max(candidatos, key=self.probabilist)
+        return palavra_correta
+
     def cria_dados_teste(self, nome_arquivo):
         lista_palavras_teste = []
         f = open(nome_arquivo, "r", encoding="utf8")
@@ -142,10 +154,9 @@ if __name__ == '__main__':
     palavra_errada = "lógiac"
     palavras_geradas = gerador_palavras(palavra_errada)
     palavras_g = gerador_turbinado(gerador_palavras(palavra_errada))
-    "lógica" in palavras_g
-    print(palavras_g)
 
     vocabulario = set(new_corretor.lista_normalizada)
+    new_corretor.novo_corrector(palavra_errada, vocabulario)
     new_corretor.avaliador(lista_teste, vocabulario)
 
     # palavra_correta = new_corretor.corrector(palavra_errada)
