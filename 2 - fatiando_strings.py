@@ -84,6 +84,13 @@ def gerador_palavras(palavra):
     return palavras_geradas
 
 
+def gerador_turbinado(palavras_geradas):
+    novas_palavras = []
+    for palavra in palavras_geradas:
+        novas_palavras += gerador_palavras(palavra)
+
+    return novas_palavras
+
 class Corretor:
 
     def __init__(self):
@@ -134,7 +141,9 @@ if __name__ == '__main__':
 
     palavra_errada = "lógiac"
     palavras_geradas = gerador_palavras(palavra_errada)
-    print(palavras_geradas)
+    palavras_g = gerador_turbinado(gerador_palavras(palavra_errada))
+    "lógica" in palavras_g
+    print(palavras_g)
 
     vocabulario = set(new_corretor.lista_normalizada)
     new_corretor.avaliador(lista_teste, vocabulario)
